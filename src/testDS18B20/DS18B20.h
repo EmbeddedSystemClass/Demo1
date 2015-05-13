@@ -22,10 +22,6 @@ typedef struct struDS18B20_GPIO
 #define DS18B20_MAIN						(0)				// 主缸
 #define DS18B20_UNDER						(1)				// 底缸
 
-#define DS18B20_DQ_PIN						GPIO_Pin_0					/* PB.12 */
-#define DS18B20_DQ_GPIO_PORT				GPIOB						/* GPIOB */
-#define DS18B20_DQ_GPIO_CLK					RCC_APB2Periph_GPIOB
-
 #define DS18B20_H(id)						GPIO_SetBits(s_DS18B20s[id].port, s_DS18B20s[id].pin)
 #define DS18B20_L(id)						GPIO_ResetBits(s_DS18B20s[id].port, s_DS18B20s[id].pin)
 

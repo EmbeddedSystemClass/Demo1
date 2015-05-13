@@ -34,19 +34,19 @@ BaseType_t InitDS18B20()
 	// 初始化延时us用的定时器TIM5
 	initTIM5();
 
-	// 初始化DS18B20使用的管脚
-	RCC_APB2PeriphClockCmd(DS18B20_DQ_GPIO_CLK, ENABLE);
-
-	/*!< Configure DS18B20 DQ */
-	GPIO_InitStructure.GPIO_Pin = DS18B20_DQ_PIN;
-	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_OD;
-	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
-	GPIO_Init(DS18B20_DQ_GPIO_PORT, &GPIO_InitStructure);
-
 	// 初始化所有的DS18B20
 	for (i = 0; i < (sizeof(s_DS18B20s) / sizeof(s_DS18B20s[0])); ++i)
 	{
-	// Reset DS18B20
+		// 初始化DS18B20使用的管脚
+		RCC_APB2PeriphClockCmd(s_DS18B20s[i].portclk, ENABLE);
+
+		/*!< Configure DS18B20 DQ */
+		GPIO_InitStructure.GPIO_Pin = s_DS18B20s[i].pin;
+		GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_OD;
+		GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+		GPIO_Init(s_DS18B20s[i].port, &GPIO_InitStructure);
+
+		// Reset DS18B20
 		if (DS18B20_Reset(i) != pdTRUE)
 		{
 			return pdFALSE;
@@ -207,8 +207,6 @@ int16_t GetTemperature(uint8_t id)
 	DS18B20_Reset(id);
 	DS18B20_WriteByte(id, DS18B20_COMMAND_SKIPROM);
 	DS18B20_WriteByte(id, DS18B20_COMMAND_CONVERTT);
-
-	DS18B20_H(id);
 
 	// todo:需要更换为FreeRTOS的延迟函数，以便可以进行任务切换
 	for (i = 0; i < 9; ++i)
