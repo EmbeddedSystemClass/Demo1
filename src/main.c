@@ -127,9 +127,9 @@ main(int argc, char* argv[])
 	/* test DS18B20 */
 	InitDS18B20();
 
-	temperature = GetTemperature(0);
+	// temperature = GetTemperature(0);
 
-	temperature = 0;
+	// temperature = 0;
 
 	vTaskStartScheduler();
 
