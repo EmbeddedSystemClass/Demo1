@@ -16,12 +16,15 @@
 #define sEE_I2C                          I2C2
 #define sEE_I2C_CLK                      RCC_APB1Periph_I2C2
 
+#define sRTC_I2C						 I2C2
+
 #define sEE_I2C_SCL_PIN                  GPIO_Pin_10                  /* PB.10 */
 #define sEE_I2C_SCL_GPIO_PORT            GPIOB                       /* GPIOB */
 #define sEE_I2C_SCL_GPIO_CLK             RCC_APB2Periph_GPIOB
 #define sEE_I2C_SDA_PIN                  GPIO_Pin_11                  /* PB.11 */
 #define sEE_I2C_SDA_GPIO_PORT            GPIOB                       /* GPIOB */
 #define sEE_I2C_SDA_GPIO_CLK             RCC_APB2Periph_GPIOB
+
 
 // RTC DS3231和EEPROM公用一个I2C，不需要另外定义了。
 

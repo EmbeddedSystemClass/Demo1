@@ -7,4 +7,5 @@
 
 #include "i2cdevices.h"
 
+#define DS3231_I2C_ADDR
 

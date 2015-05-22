@@ -20,6 +20,7 @@
 #include "testfs/fs.h"
 #include "testlcd/uc1617s.h"
 #include "testDS18B20/DS18B20.h"
+#include "testi2c/i2cdevices.h"
 
 // ----------------------------------------------------------------------------
 //
@@ -125,11 +126,14 @@ main(int argc, char* argv[])
 	// InitUC1617s();
 
 	/* test DS18B20 */
-	InitDS18B20();
+	// InitDS18B20();
 
 	// temperature = GetTemperature(0);
 
 	// temperature = 0;
+
+	/* test I2C */
+	InitI2C();
 
 	vTaskStartScheduler();
 
