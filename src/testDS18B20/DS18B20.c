@@ -20,8 +20,8 @@ uint8_t DS18B20_ReadByte(uint8_t id);
 // 定义每个DS18B20的GPIO口
 static struDS18B20_GPIO_t		s_DS18B20s[] =
 {
-		{GPIO_Pin_0, GPIOB, RCC_APB2Periph_GPIOB},
-		{GPIO_Pin_1, GPIOB, RCC_APB2Periph_GPIOB}
+		{GPIO_Pin_1, GPIOA, RCC_APB2Periph_GPIOA},
+		{GPIO_Pin_2, GPIOA, RCC_APB2Periph_GPIOA}
 };
 
 static uint8_t		s_Scratchpad[9];
