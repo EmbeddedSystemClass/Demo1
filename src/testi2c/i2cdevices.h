@@ -8,7 +8,9 @@
 #ifndef TESTI2C_I2CDEVICES_H_
 #define TESTI2C_I2CDEVICES_H_
 
+#include <stdio.h>
 #include "stm32f10x.h"
+#include "FreeRTOS.h"
 
 #define I2C_SPEED               100000
 #define I2C_SLAVE_ADDRESS7      0xA0
@@ -29,6 +31,8 @@
 // RTC DS3231和EEPROM公用一个I2C，不需要另外定义了。
 
 void InitI2C();
+BaseType_t I2C_Read(I2C_TypeDef* I2Cx, uint8_t *buf, uint32_t nbyte, uint8_t SlaveAddress);
+BaseType_t I2C_Write(I2C_TypeDef* I2Cx, const uint8_t* buf, uint32_t nbyte,	uint8_t SlaveAddress);
 
 void GetRTC_DS3231();
 
