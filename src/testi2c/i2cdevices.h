@@ -34,6 +34,7 @@ void InitI2C();
 BaseType_t I2C_Read(I2C_TypeDef* I2Cx, uint8_t *buf, uint32_t nbyte, uint8_t SlaveAddress);
 BaseType_t I2C_Write(I2C_TypeDef* I2Cx, const uint8_t* buf, uint32_t nbyte,	uint8_t SlaveAddress);
 
-void GetRTC_DS3231();
+BaseType_t InitDS3231();
+BaseType_t GetRTC_DS3231();
 
 #endif /* TESTI2C_I2CDEVICES_H_ */

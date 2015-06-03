@@ -8,7 +8,7 @@
 #include "DS18B20.h"
 
 void initTIM5();
-void Ddelay_us(uint16_t us);
+void Delay_us(uint16_t us);
 
 BaseType_t DS18B20_Reset(uint8_t id);
 void DS18B20_WriteBit0(uint8_t id);

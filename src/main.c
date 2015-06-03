@@ -134,6 +134,8 @@ main(int argc, char* argv[])
 
 	/* test I2C */
 	InitI2C();
+	InitDS3231();
+	GetRTC_DS3231();
 
 	vTaskStartScheduler();
 

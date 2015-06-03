@@ -8,7 +8,7 @@
 #include "i2cdevices.h"
 
 /* Register addresses. */
-#define DS3231_I2C_ADDR			0x68	// The I2C address of the DS3231 chip. Default is 1101000 (104 decimal)
+#define DS3231_I2C_ADDR			0xD0	// The I2C address of the DS3231 chip. Default is 1101000 (104 decimal)
 
 #define DS3231_TIME_ADDRESS		0x00	// Start of time register addresses, there are 7 in total (0x00 to 0x06)
 #define DS3231_TIME_HOURS		0x02	// Start of the Hours register address.
@@ -40,3 +40,72 @@
 
 #define SECONDS_PER_DAY 86400L				// Used by DateTime class
 #define SECONDS_FROM_1970_TO_2000 946684800	// Used by DateTime class
+
+BaseType_t DS3231_Read(uint8_t pointer, uint8_t *buf, uint32_t nbyte)
+{
+	// 写入Pointer
+	if (pdFALSE == I2C_Write(sRTC_I2C, &pointer, 1, DS3231_I2C_ADDR))
+	{
+		return pdFALSE;
+	}
+
+	// 读取数据
+	if (pdFALSE == I2C_Read(sRTC_I2C, buf, nbyte, DS3231_I2C_ADDR))
+	{
+		return pdFALSE;
+	}
+
+	return pdTRUE;
+}
+
+BaseType_t DS3231_Write(uint8_t pointer, const uint8_t* buf, uint32_t nbyte)
+{
+	uint8_t		buffer[8];
+	uint32_t	i;
+
+	assert_param(nbyte <= 7);
+
+	buffer[0] = pointer;
+	for (i = 0; i < nbyte; i++)
+	{
+		buffer[i + 1] = buf[i];
+	}
+
+	return I2C_Write(sRTC_I2C, buffer, nbyte + 1, DS3231_I2C_ADDR);
+}
+
+BaseType_t InitDS3231()
+{
+	uint8_t			ctrl;
+
+	// 读取Control Register
+	if (pdTRUE == DS3231_Read(DS3231_SPECIAL_CONTROL, &ctrl, 1))
+	{
+		// 判断是否需要启动
+		if (ctrl & DS3231_BIT_EOSC)
+		{
+			// 当前关闭，需要启动
+			ctrl |= DS3231_BIT_EOSC;
+			if (pdTRUE == DS3231_Write(DS3231_SPECIAL_CONTROL, &ctrl, 1))
+			{
+				return pdTRUE;
+			}
+		}
+	}
+
+	return pdFALSE;
+}
+
+BaseType_t GetRTC_DS3231()
+{
+	uint8_t			buffer[7];
+
+	if (pdTRUE == DS3231_Read(0, buffer, 7))
+	{
+		buffer[6] = 0;
+		return pdTRUE;
+	}
+
+	return pdFALSE;
+}
+
