@@ -21,6 +21,7 @@
 #include "testlcd/uc1617s.h"
 #include "testDS18B20/DS18B20.h"
 #include "testi2c/i2cdevices.h"
+#include "gui/gui.h"
 
 // ----------------------------------------------------------------------------
 //
@@ -134,8 +135,9 @@ main(int argc, char* argv[])
 
 	/* test I2C */
 	InitI2C();
-	InitDS3231();
-	GetRTC_DS3231();
+
+	// 初始化GUI线程
+	xTaskCreate( GUITask, "GUI", 1024, NULL, 1, NULL );
 
 	vTaskStartScheduler();
 
