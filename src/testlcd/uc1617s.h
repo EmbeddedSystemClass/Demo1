@@ -58,7 +58,7 @@
 #define sLCD_CS_HIGH()      GPIO_SetBits(sLCD_CS_GPIO_PORT, sLCD_CS_PIN)
 
 #define sLCD_CD_COMMAND()	GPIO_ResetBits(sLCD_CD_GPIO_PORT, sLCD_CD_PIN)		// Command
-#define sLCD_CD_DATA()		GPIO_SetBints(sLCD_CD_GPIO_PORT, sLCD_CD_PIN)		// Data
+#define sLCD_CD_DATA()		GPIO_SetBits(sLCD_CD_GPIO_PORT, sLCD_CD_PIN)		// Data
 
 void InitUC1617s(void);
 
