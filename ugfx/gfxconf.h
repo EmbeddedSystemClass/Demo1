@@ -157,7 +157,7 @@
 //    #define GWIN_CONSOLE_USE_HISTORY                 TRUE
 //        #define GWIN_CONSOLE_HISTORY_AVERAGING       TRUE
 //        #define GWIN_CONSOLE_HISTORY_ATCREATE        TRUE
-//    #define GWIN_CONSOLE_ESCSEQ                      TRUE
+    #define GWIN_CONSOLE_ESCSEQ                      TRUE
 //    #define GWIN_CONSOLE_USE_BASESTREAM              TRUE
 //    #define GWIN_CONSOLE_USE_FLOAT                   TRUE
 //#define GWIN_NEED_GRAPH                              TRUE
