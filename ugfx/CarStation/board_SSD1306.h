@@ -9,6 +9,7 @@
 #define _GDISP_LLD_BOARD_H
 
 #include "stm32f10x.h"
+#include "task.h"
 
 //#define SSD1306_PAGE_PREFIX		0x40
 
@@ -202,7 +203,10 @@ static inline void write_data(GDisplay *g, uint8_t* data, uint16_t length) {
 		DMA_Cmd(SPI_MASTER_Tx_DMA_Channel, ENABLE);
 
 		// 等待DMA完成（不能异步处理，否则可能会导致command命令和数据并行发送）
-		while(!DMA_GetFlagStatus(SPI_MASTER_Tx_DMA_FLAG));
+		while(!DMA_GetFlagStatus(SPI_MASTER_Tx_DMA_FLAG))
+		{
+			taskYIELD();
+		};
 
 		// 完成DMA发送后，关闭SPI的DMA和DMA通道，等下次发送再次初始化开启
 		SPI_I2S_DMACmd(sLCD_SPI, SPI_I2S_DMAReq_Tx, DISABLE);
