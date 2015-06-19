@@ -138,5 +138,9 @@ standard names. */
 #define xPortPendSVHandler PendSV_Handler
 #define xPortSysTickHandler	SysTick_Handler
 
+// for FreeRTOS Plus CLI
+#define configCOMMAND_INT_MAX_OUTPUT_SIZE 1000
+
+
 #endif /* FREERTOS_CONFIG_H */
 
