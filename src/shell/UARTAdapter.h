@@ -72,64 +72,19 @@
 
 typedef void * xComPortHandle;
 
-typedef enum
-{ 
-	serCOM1, 
-	serCOM2, 
-	serCOM3, 
-	serCOM4, 
-	serCOM5, 
-	serCOM6, 
-	serCOM7, 
-	serCOM8 
-} eCOMPort;
+#define USARTsh                   USART1
+#define USARTsh_GPIO              GPIOA
+#define USARTsh_CLK               RCC_APB2Periph_USART1
+#define USARTsh_GPIO_CLK          RCC_APB2Periph_GPIOA
+#define USARTsh_RxPin             GPIO_Pin_10
+#define USARTsh_TxPin             GPIO_Pin_9
 
-typedef enum 
-{ 
-	serNO_PARITY, 
-	serODD_PARITY, 
-	serEVEN_PARITY, 
-	serMARK_PARITY, 
-	serSPACE_PARITY 
-} eParity;
+#define USARTsh_BT_GPIO           GPIOA
+#define USARTsh_BT_GPIO_CLK       RCC_APB2Periph_GPIOA
+#define USARTsh_BT_Pin            GPIO_Pin_8
 
-typedef enum 
-{ 
-	serSTOP_1, 
-	serSTOP_2 
-} eStopBits;
-
-typedef enum 
-{ 
-	serBITS_5, 
-	serBITS_6, 
-	serBITS_7, 
-	serBITS_8 
-} eDataBits;
-
-typedef enum 
-{ 
-	ser50,		
-	ser75,		
-	ser110,		
-	ser134,		
-	ser150,    
-	ser200,
-	ser300,		
-	ser600,		
-	ser1200,	
-	ser1800,	
-	ser2400,   
-	ser4800,
-	ser9600,		
-	ser19200,	
-	ser38400,	
-	ser57600,	
-	ser115200
-} eBaud;
 
 xComPortHandle xSerialPortInitMinimal( unsigned long ulWantedBaud, unsigned portBASE_TYPE uxQueueLength );
-xComPortHandle xSerialPortInit( eCOMPort ePort, eBaud eWantedBaud, eParity eWantedParity, eDataBits eWantedDataBits, eStopBits eWantedStopBits, unsigned portBASE_TYPE uxBufferLength );
 void vSerialPutString( xComPortHandle pxPort, const signed char * const pcString, unsigned short usStringLength );
 signed portBASE_TYPE xSerialGetChar( xComPortHandle pxPort, signed char *pcRxedChar, TickType_t xBlockTime );
 signed portBASE_TYPE xSerialPutChar( xComPortHandle pxPort, signed char cOutChar, TickType_t xBlockTime );

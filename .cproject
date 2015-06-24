@@ -255,9 +255,16 @@
 							<option id="ilg.gnuarmeclipse.managedbuild.cross.option.command.rm.691579117.1489547110" name="Remove command" superClass="ilg.gnuarmeclipse.managedbuild.cross.option.command.rm.691579117"/>
 							<option id="ilg.gnuarmeclipse.managedbuild.cross.option.addtools.createflash.143494585.240816954" name="Create flash image" superClass="ilg.gnuarmeclipse.managedbuild.cross.option.addtools.createflash.143494585"/>
 							<option id="ilg.gnuarmeclipse.managedbuild.cross.option.addtools.printsize.1247890488.1456256749" name="Print size" superClass="ilg.gnuarmeclipse.managedbuild.cross.option.addtools.printsize.1247890488"/>
-							<tool id="ilg.gnuarmeclipse.managedbuild.cross.tool.assembler.1123199288" name="Cross ARM GNU Assembler" superClass="ilg.gnuarmeclipse.managedbuild.cross.tool.assembler.1584350265"/>
-							<tool id="ilg.gnuarmeclipse.managedbuild.cross.tool.c.compiler.1660529070" name="Cross ARM C Compiler" superClass="ilg.gnuarmeclipse.managedbuild.cross.tool.c.compiler.1912168251"/>
-							<tool id="ilg.gnuarmeclipse.managedbuild.cross.tool.cpp.compiler.1762872323" name="Cross ARM C++ Compiler" superClass="ilg.gnuarmeclipse.managedbuild.cross.tool.cpp.compiler.369906842"/>
+							<targetPlatform archList="all" binaryParser="org.eclipse.cdt.core.ELF" id="ilg.gnuarmeclipse.managedbuild.cross.targetPlatform" isAbstract="false" osList="all" superClass="ilg.gnuarmeclipse.managedbuild.cross.targetPlatform"/>
+							<tool id="ilg.gnuarmeclipse.managedbuild.cross.tool.assembler.1123199288" name="Cross ARM GNU Assembler" superClass="ilg.gnuarmeclipse.managedbuild.cross.tool.assembler.1584350265">
+								<inputType id="ilg.gnuarmeclipse.managedbuild.cross.tool.assembler.input.1035824058" superClass="ilg.gnuarmeclipse.managedbuild.cross.tool.assembler.input"/>
+							</tool>
+							<tool id="ilg.gnuarmeclipse.managedbuild.cross.tool.c.compiler.1660529070" name="Cross ARM C Compiler" superClass="ilg.gnuarmeclipse.managedbuild.cross.tool.c.compiler.1912168251">
+								<inputType id="ilg.gnuarmeclipse.managedbuild.cross.tool.c.compiler.input.2070325906" superClass="ilg.gnuarmeclipse.managedbuild.cross.tool.c.compiler.input"/>
+							</tool>
+							<tool id="ilg.gnuarmeclipse.managedbuild.cross.tool.cpp.compiler.1762872323" name="Cross ARM C++ Compiler" superClass="ilg.gnuarmeclipse.managedbuild.cross.tool.cpp.compiler.369906842">
+								<inputType id="ilg.gnuarmeclipse.managedbuild.cross.tool.cpp.compiler.input.353559230" superClass="ilg.gnuarmeclipse.managedbuild.cross.tool.cpp.compiler.input"/>
+							</tool>
 							<tool id="ilg.gnuarmeclipse.managedbuild.cross.tool.c.linker.1226692267" name="Cross ARM C Linker" superClass="ilg.gnuarmeclipse.managedbuild.cross.tool.c.linker.425628821"/>
 							<tool id="ilg.gnuarmeclipse.managedbuild.cross.tool.cpp.linker.993920530" name="Cross ARM C++ Linker" superClass="ilg.gnuarmeclipse.managedbuild.cross.tool.cpp.linker.1540614064"/>
 							<tool id="ilg.gnuarmeclipse.managedbuild.cross.tool.archiver.1756968482" name="Cross ARM GNU Archiver" superClass="ilg.gnuarmeclipse.managedbuild.cross.tool.archiver.946309893"/>
@@ -266,6 +273,9 @@
 							<tool id="ilg.gnuarmeclipse.managedbuild.cross.tool.printsize.1720805913" name="Cross ARM GNU Print Size" superClass="ilg.gnuarmeclipse.managedbuild.cross.tool.printsize.158495596"/>
 						</toolChain>
 					</folderInfo>
+					<fileInfo id="ilg.gnuarmeclipse.managedbuild.cross.config.elf.debug.2118787460.240672636" name="Sample-CLI-commands.c" rcbsApplicability="disable" resourcePath="src/shell/Sample-CLI-commands.c" toolsToInvoke="ilg.gnuarmeclipse.managedbuild.cross.tool.c.compiler.1660529070.706792874">
+						<tool id="ilg.gnuarmeclipse.managedbuild.cross.tool.c.compiler.1660529070.706792874" name="Cross ARM C Compiler" superClass="ilg.gnuarmeclipse.managedbuild.cross.tool.c.compiler.1660529070"/>
+					</fileInfo>
 					<sourceEntries>
 						<entry excluding="portable/MemMang/heap_4.c|portable/MemMang/heap_3.c|portable/MemMang/heap_2.c|portable/MemMang/heap_5.c" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="FreeRTOS/Source"/>
 						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="spiffs"/>

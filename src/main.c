@@ -52,6 +52,11 @@
 #define BLINK_PIN_MASK(_N)              (1 << (_N))
 #define BLINK_RCC_MASKx(_N)             (RCC_APB2Periph_GPIOA << (_N))
 
+#define mainUART_COMMAND_CONSOLE_STACK_SIZE		( configMINIMAL_STACK_SIZE * 10 )
+#define mainUART_COMMAND_CONSOLE_TASK_PRIORITY  	4
+extern void vRegisterSampleCLICommands( void );
+extern void vUARTCommandConsoleStart( uint16_t usStackSize, UBaseType_t uxPriority );
+
 inline void
 __attribute__((always_inline))
 blink_led_on(void)
@@ -136,8 +141,15 @@ main(int argc, char* argv[])
 	/* test I2C */
 	InitI2C();
 
-	// ³õÊ¼»¯GUIÏß³Ì
+	// ï¿½ï¿½Ê¼ï¿½ï¿½GUIï¿½ß³ï¿½
 	xTaskCreate( GUITask, "GUI", 1024, NULL, 1, NULL );
+
+	// åˆ›å»ºshellçº¿ç¨‹
+	vRegisterSampleCLICommands();
+
+	vUARTCommandConsoleStart(mainUART_COMMAND_CONSOLE_STACK_SIZE,
+			mainUART_COMMAND_CONSOLE_TASK_PRIORITY);
+
 
 	vTaskStartScheduler();
 

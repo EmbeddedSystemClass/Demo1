@@ -101,36 +101,91 @@ static QueueHandle_t xCharsForTx;
 void vUARTInterruptHandler( void );
 
 /*-----------------------------------------------------------*/
+// 初始化UART模块，引脚，以及蓝牙控制线
+void UART_Config(uint32_t baud)
+{
+	GPIO_InitTypeDef GPIO_InitStructure;
+	USART_InitTypeDef USART_InitStructure;
+
+	// 初始化管脚
+	/* Enable USARTsh Clock */
+	RCC_APB2PeriphClockCmd(USARTsh_CLK, ENABLE);
+	RCC_APB2PeriphClockCmd(USARTsh_GPIO_CLK | USARTsh_BT_GPIO_CLK, ENABLE);
+	/*!< GPIO configuration */
+	/* Configure USARTsh Rx as input floating */
+	GPIO_InitStructure.GPIO_Pin = USARTsh_RxPin;
+	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN_FLOATING;
+	GPIO_Init(USARTsh_GPIO, &GPIO_InitStructure);
+
+	/* Configure USARTsh Tx as alternate function push-pull */
+	GPIO_InitStructure.GPIO_Pin = USARTsh_TxPin;
+	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF_PP;
+	GPIO_Init(USARTsh_GPIO, &GPIO_InitStructure);
+
+	// 蓝牙控制引脚
+	GPIO_InitStructure.GPIO_Pin = USARTsh_BT_Pin;
+	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;
+	GPIO_Init(USARTsh_BT_GPIO, &GPIO_InitStructure);
+
+	// 初始化UART
+	/* USARTsh and USARTz configuration ------------------------------------------------------*/
+	/* USARTsh and USARTz configured as follow:
+	 - BaudRate = 230400 baud
+	 - Word Length = 8 Bits
+	 - One Stop Bit
+	 - Even parity
+	 - Hardware flow control disabled (RTS and CTS signals)
+	 - Receive and transmit enabled
+	 */
+	USART_InitStructure.USART_BaudRate = baud;
+	USART_InitStructure.USART_WordLength = USART_WordLength_8b;
+	USART_InitStructure.USART_StopBits = USART_StopBits_1;
+	USART_InitStructure.USART_Parity = USART_Parity_Even;
+	USART_InitStructure.USART_HardwareFlowControl =
+			USART_HardwareFlowControl_None;
+	USART_InitStructure.USART_Mode = USART_Mode_Rx | USART_Mode_Tx;
+
+	/* Configure USARTsh */
+	USART_Init(USARTsh, &USART_InitStructure);
+
+	/* Enable the USARTsh */
+	USART_Cmd(USARTsh, ENABLE);
+
+	// 蓝牙开启
+	GPIO_SetBits(USARTsh_BT_GPIO, USARTsh_BT_Pin);
+}
+
 
 /*
  * See the serial2.h header file.
  */
 xComPortHandle xSerialPortInitMinimal( unsigned long ulWantedBaud, unsigned portBASE_TYPE uxQueueLength )
 {
-xComPortHandle xReturn;
-
-
+	xComPortHandle xReturn;
 
 	/* Create the queues used to hold Rx/Tx characters. */
-	xRxedChars = xQueueCreate( uxQueueLength, ( unsigned portBASE_TYPE ) sizeof( signed char ) );
-	xCharsForTx = xQueueCreate( uxQueueLength + 1, ( unsigned portBASE_TYPE ) sizeof( signed char ) );
-	
+	xRxedChars = xQueueCreate(uxQueueLength,
+			( unsigned portBASE_TYPE ) sizeof( signed char ));
+	xCharsForTx = xQueueCreate(uxQueueLength + 1,
+			( unsigned portBASE_TYPE ) sizeof( signed char ));
+
 	/* If the queue/semaphore was created correctly then setup the serial port
-	hardware. */
-	if( ( xRxedChars != serINVALID_QUEUE ) && ( xCharsForTx != serINVALID_QUEUE ) )
+	 hardware. */
+	if ((xRxedChars != serINVALID_QUEUE) && (xCharsForTx != serINVALID_QUEUE))
 	{
 
-		UART_Config(9600);
-
+		UART_Config(ulWantedBaud);
 
 	}
 	else
 	{
-		xReturn = ( xComPortHandle ) 0;
+		xReturn = (xComPortHandle) 0;
 	}
 
 	/* This demo file only supports a single port but we have to return
-	something to comply with the standard demo header file. */
+	 something to comply with the standard demo header file. */
 	return xReturn;
 }
 /*-----------------------------------------------------------*/
