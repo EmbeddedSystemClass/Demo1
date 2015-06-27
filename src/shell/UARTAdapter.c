@@ -98,7 +98,7 @@ static QueueHandle_t xCharsForTx;
 /*-----------------------------------------------------------*/
 
 /* UART interrupt handler. */
-void vUARTInterruptHandler( void );
+void USART1_IRQHandler( void );
 
 /*-----------------------------------------------------------*/
 // 初始化UART模块，引脚，以及蓝牙控制线
@@ -106,6 +106,7 @@ void UART_Config(uint32_t baud)
 {
 	GPIO_InitTypeDef GPIO_InitStructure;
 	USART_InitTypeDef USART_InitStructure;
+	NVIC_InitTypeDef NVIC_InitStructure;
 
 	// 初始化管脚
 	/* Enable USARTsh Clock */
@@ -142,13 +143,22 @@ void UART_Config(uint32_t baud)
 	USART_InitStructure.USART_BaudRate = baud;
 	USART_InitStructure.USART_WordLength = USART_WordLength_8b;
 	USART_InitStructure.USART_StopBits = USART_StopBits_1;
-	USART_InitStructure.USART_Parity = USART_Parity_Even;
+	USART_InitStructure.USART_Parity = USART_Parity_No;
 	USART_InitStructure.USART_HardwareFlowControl =
 			USART_HardwareFlowControl_None;
 	USART_InitStructure.USART_Mode = USART_Mode_Rx | USART_Mode_Tx;
 
 	/* Configure USARTsh */
 	USART_Init(USARTsh, &USART_InitStructure);
+
+	//Enable the interrupt
+	USART_ITConfig(USART1, USART_IT_RXNE, ENABLE);
+
+	NVIC_InitStructure.NVIC_IRQChannel = USART1_IRQn;
+	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 6;
+	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;
+	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
+	NVIC_Init(&NVIC_InitStructure);
 
 	/* Enable the USARTsh */
 	USART_Cmd(USARTsh, ENABLE);
@@ -272,7 +282,7 @@ void vSerialClose( xComPortHandle xPort )
 }
 /*-----------------------------------------------------------*/
 
-void vUARTInterruptHandler( void )
+void USART1_IRQHandler( void )
 {
 portBASE_TYPE xHigherPriorityTaskWoken = pdFALSE;
 char cChar;

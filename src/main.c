@@ -142,7 +142,7 @@ main(int argc, char* argv[])
 	InitI2C();
 
 	// ��ʼ��GUI�߳�
-	xTaskCreate( GUITask, "GUI", 1024, NULL, 1, NULL );
+	// xTaskCreate( GUITask, "GUI", 1024, NULL, 1, NULL );
 
 	// 创建shell线程
 	vRegisterSampleCLICommands();
