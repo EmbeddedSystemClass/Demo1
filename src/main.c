@@ -141,7 +141,7 @@ main(int argc, char* argv[])
 	/* test I2C */
 	InitI2C();
 
-	// ��ʼ��GUI�߳�
+	// 初始化GUI线程
 	// xTaskCreate( GUITask, "GUI", 1024, NULL, 1, NULL );
 
 	// 创建shell线程
