@@ -152,7 +152,7 @@ void UART_Config(uint32_t baud)
 	USART_Init(USARTsh, &USART_InitStructure);
 
 	//Enable the interrupt
-	USART_ITConfig(USART1, USART_IT_RXNE, ENABLE);
+	USART_ITConfig(USARTsh, USART_IT_RXNE, ENABLE);
 
 	NVIC_InitStructure.NVIC_IRQChannel = USART1_IRQn;
 	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 6;
@@ -265,7 +265,7 @@ signed portBASE_TYPE xReturn;
 	if( xQueueSend( xCharsForTx, &cOutChar, xBlockTime ) == pdPASS )
 	{
 		xReturn = pdPASS;
-		USART_ITConfig( USART1, USART_IT_TXE, ENABLE );
+		USART_ITConfig( USARTsh, USART_IT_TXE, ENABLE );
 	}
 	else
 	{
