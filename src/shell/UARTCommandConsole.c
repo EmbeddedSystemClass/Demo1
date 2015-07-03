@@ -91,7 +91,7 @@
 
 /* Dimentions a buffer to be used by the UART driver, if the UART driver uses a
 buffer at all. */
-#define cmdQUEUE_LENGTH			1000
+#define cmdQUEUE_LENGTH			25
 
 /* DEL acts as a backspace. */
 #define cmdASCII_DEL		( 0x7F )

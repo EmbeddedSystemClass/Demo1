@@ -87,7 +87,7 @@
 /* Misc defines. */
 #define serINVALID_QUEUE				( ( QueueHandle_t ) 0 )
 #define serNO_BLOCK						( ( TickType_t ) 0 )
-#define serTX_BLOCK_TIME				( 40 / portTICK_PERIOD_MS )
+#define serTX_BLOCK_TIME				( pdMS_TO_TICKS( 100 ) )
 
 /*-----------------------------------------------------------*/
 
@@ -242,7 +242,7 @@ signed char *pxNext;
 	pxNext = ( signed char * ) pcString;
 	while( *pxNext )
 	{
-		xSerialPutChar( pxPort, *pxNext, serNO_BLOCK );
+		xSerialPutChar( pxPort, *pxNext, serTX_BLOCK_TIME );
 		pxNext++;
 	}
 }
